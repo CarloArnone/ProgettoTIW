@@ -36,8 +36,8 @@ CREATE TABLE Offerte
     idCreatore    varchar(50) references Utenti (id) on update cascade on delete cascade,
     idAsta        varchar(50) references Aste (id) on update cascade on delete cascade,
     prezzoOfferto int      not null,
-    data          datetime not null,
-    primary key (idCreatore, idAsta)
+    dataOfferta          datetime not null,
+    primary key (idCreatore, idAsta, dataOfferta)
 );
 
 CREATE TABLE Messaggi
