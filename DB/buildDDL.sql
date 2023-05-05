@@ -47,21 +47,17 @@ CREATE TABLE Messaggi
     messaggio varchar(255) not null default ''
 );
 
-CREATE VIEW AsteChiuseConOfferte(id, idVincitore, prezzoFinale) AS
-(
 
-SELECT idAsta, O.idCreatore, prezzoOfferto
-FROM Offerte O
-         join Aste A on O.idAsta = A.id
-WHERE dataTermine <= CURRENT_TIMESTAMP
+CREATE VIEW asteAperte(idAsta, prezzoIniziale, rialzoMinimo) AS (
+                                                                SELECT id, prezzoIniziale, rialzoMinimo
+                                                                FROM aste
+                                                                WHERE closed = false
+                                                                );
 
-);
 
-CREATE VIEW AsteChiuseSenzaOfferte(id) AS
-(
-
-SELECT id
-FROM Aste A
-WHERE dataTermine <= CURRENT_TIMESTAMP
-
-);
+CREATE VIEW asteChiuse(idAsta, idVincitore, prezzoFinale, indSpedizione) AS (
+SELECT A.id, O.idCreatore, O.prezzoOfferto, U.indirizzoSpedizione
+FROM aste A join offerte O on A.id = O.idAsta
+            join utenti U on O.idCreatore = U.id
+WHERE A.closed = true
+                                                                            );
