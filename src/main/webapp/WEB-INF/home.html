@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  lang="it_IT">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<p th:text="${session.user.getId()} ?: 'Nessuno'"></p>
+<a th:href="@{Vendo}">Vendo Page</a>
+<a th:href="@{Acquisto}">Acquisto Page</a>
+</body>
+</html>
