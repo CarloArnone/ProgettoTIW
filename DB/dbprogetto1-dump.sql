@@ -102,6 +102,7 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `idCreatore`,
  1 AS `idVincitore`,
  1 AS `prezzoFinale`,
+ 1 AS `dataTermine`,
  1 AS `indirizzoSpedizione`*/;
 SET character_set_client = @saved_cs_client;
 
@@ -170,7 +171,7 @@ CREATE TABLE `utenti` (
   `lingua` varchar(15) DEFAULT 'it_IT',
   `lastLogin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,7 +215,7 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`carlo`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `astechiuse` AS select `a`.`id` AS `id`,`a`.`idCreatore` AS `idCreatore`,`o`.`idCreatore` AS `idVincitore`,`o`.`prezzoOfferto` AS `prezzoFinale`,`u`.`indirizzoSpedizione` AS `indirizzoSpedizione` from ((`aste` `a` left join `offerte` `o` on((`a`.`id` = `o`.`idAsta`))) left join `utenti` `u` on((`o`.`idCreatore` = `u`.`id`))) where ((`a`.`closed` = true) and ((`o`.`prezzoOfferto` = (select max(`offerte`.`prezzoOfferto`) from `offerte` where (`a`.`id` = `offerte`.`idAsta`))) or (`o`.`prezzoOfferto` is null))) */;
+/*!50001 VIEW `astechiuse` AS select `a`.`id` AS `id`,`a`.`idCreatore` AS `idCreatore`,`o`.`idCreatore` AS `idVincitore`,`o`.`prezzoOfferto` AS `prezzoFinale`,`a`.`dataTermine` AS `dataTermine`,`u`.`indirizzoSpedizione` AS `indirizzoSpedizione` from ((`aste` `a` left join `offerte` `o` on((`a`.`id` = `o`.`idAsta`))) left join `utenti` `u` on((`o`.`idCreatore` = `u`.`id`))) where ((`a`.`closed` = true) and ((`o`.`prezzoOfferto` = (select max(`offerte`.`prezzoOfferto`) from `offerte` where (`a`.`id` = `offerte`.`idAsta`))) or (`o`.`prezzoOfferto` is null))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -228,4 +229,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-06 20:54:48
+-- Dump completed on 2023-05-07 11:57:00

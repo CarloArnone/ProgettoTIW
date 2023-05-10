@@ -1,21 +1,32 @@
 package it.polimi.tiw.asteHTML.Beans;
 
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 public class AstaBean {
     private int id;
     private int idVincitore;
     private int prezzoRaggiunto;
     private int rialzoMinimo;
-    private int dataScadenza;
+    private Date dataScadenza;
     private int oreRimantenti;
     private String indSped;
 
-    public AstaBean(int id, int idVincitore, int prezzoRaggiunto, int rialzoMinimo, int dataScadenza, int oreRimantenti, String indSped) {
+
+    public AstaBean(int id, int prezzoRaggiunto, int rialzoMinimo, Date dataScadenza, int oreRimantenti) {
         this.id = id;
-        this.idVincitore = idVincitore;
         this.prezzoRaggiunto = prezzoRaggiunto;
         this.rialzoMinimo = rialzoMinimo;
         this.dataScadenza = dataScadenza;
         this.oreRimantenti = oreRimantenti;
+        this.indSped = null;
+    }
+
+    public AstaBean(int id, int idVincitore, int prezzoRaggiunto, Date dataScadenza, String indSped) {
+        this.id = id;
+        this.idVincitore = idVincitore;
+        this.prezzoRaggiunto = prezzoRaggiunto;
+        this.dataScadenza = dataScadenza;
         this.indSped = indSped;
     }
 
@@ -51,11 +62,11 @@ public class AstaBean {
         this.rialzoMinimo = rialzoMinimo;
     }
 
-    public int getDataScadenza() {
+    public Date getDataScadenza() {
         return dataScadenza;
     }
 
-    public void setDataScadenza(int dataScadenza) {
+    public void setDataScadenza(Date dataScadenza) {
         this.dataScadenza = dataScadenza;
     }
 
@@ -73,5 +84,15 @@ public class AstaBean {
 
     public void setIndSped(String indSped) {
         this.indSped = indSped;
+    }
+
+    public String getRemainingTime(){
+        if(oreRimantenti > 0){ //Data login maggiore Data termine asta
+            return "0d 0h";
+        }
+        int timeRemaining = -oreRimantenti;
+        int days = timeRemaining/24;
+        int hours = timeRemaining - days*24;
+        return days + "d " + hours + "h";
     }
 }

@@ -29,10 +29,10 @@ public class UtenteDao {
         }
         else{
             res.next();
-            String queryUpdateLastLogin = "UPDATE utenti SET lastLogin = CURRENT_TIMESTAMP WHERE id = ?";
+            String queryUpdateLastLogin = "UPDATE utenti SET lastLogin = CURRENT_TIMESTAMP WHERE userName = ?";
             PreparedStatement pst1 = connection.prepareStatement(queryUpdateLastLogin);
             pst1.setString(1, username);
-            pst1.executeQuery();
+            pst1.executeUpdate();
             return new UserBean(res.getInt("id"),
                                 username,
                                 res.getString("indirizzoSpedizione"),

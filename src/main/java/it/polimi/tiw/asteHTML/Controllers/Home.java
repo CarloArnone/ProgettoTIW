@@ -20,7 +20,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 @WebServlet(name = "loginPage", value = "/LoginPage", loadOnStartup = 1)
-public class Login extends HttpServlet {
+public class Home extends HttpServlet {
     private TemplateEngine templateEngine;
     private Connection connection;
 
@@ -49,16 +49,6 @@ public class Login extends HttpServlet {
             throw new UnavailableException("Couldn't get db connection");
         }
 
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserBean userBean = new UserBean(req.getParameter("username"));
-        String ctxPath = "/home.html";
-        ServletContext servletContext = getServletContext();
-        final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
-        ctx.setVariable("user", userBean);
-        templateEngine.process(ctxPath, ctx, resp.getWriter());
     }
 
     @Override

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="it_IT">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendo</title>
+  <style>
+    body{
+      background: #212121;
+      color: #e8e8e8;
+      display: flex;
+      align-content: center;
+      justify-content: center;
+    }
+
+    div{
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <div>
+    <table>
+      <tr>
+        <td>Auction ID</td>
+        <td>Time till closure</td>
+        <td>Ending Date</td>
+        <td>Last bid</td>
+        <td>Articles</td>
+      </tr>
+      <tr th:each="astaAperta : ${asteaperte}">
+        <td th:text="${astaAperta.id}"></td>
+        <td th:text="${astaAperta.getRemainingTime()}" ></td>
+        <td th:text="${astaAperta.dataScadenza}" ></td>
+        <td th:text="${astaAperta.prezzoRaggiunto == 0} ? 'no bids' : ${astaAperta.prezzoRaggiunto}"></td>
+      </tr>
+    </table>
+  </div>
+  <p></p>
+  <p></p>
+  <p></p>
+  <div>
+    <table>
+      <tr>
+        <td>Auction ID</td>
+        <td>Winning Price</td>
+        <td>WinnerId</td>
+        <td>Shipping Address</td>
+      </tr>
+      <tr th:each="astaChiusa : ${astechiuse}">
+        <td th:text="${astaChiusa.id}"></td>
+        <td th:text="${astaChiusa.prezzoRaggiunto}"></td>
+        <td th:text="${astaChiusa.idVincitore}"></td>
+        <td th:text="${astaChiusa.indSped}"></td>
+      </tr>
+    </table>
+  </div>
+  <p></p>
+  <p></p>
+  <p></p>
+  <div>
+    <h3>Add new Article</h3>
+    <form action="Vendo" method="post">
+      <input type="text" name="nomearticolo" placeholder="Article Name">
+      <input type="number" name="prezzo" placeholder="Price">
+      <input type="text" name="descrizione" placeholder="Description">
+      <input type="text" name="immagine" placeholder="Article image">
+      <button type="submit"> Add </button>
+    </form>
+  </div>
+
+  <div>
+    <h3>Create Auction</h3>
+    <form action="Vendo" method="post">
+      <input type="number" name="rialzominimo" placeholder="Minimum bid wedge">
+      <input type="date" name="datatermine" placeholder="Date Closure">
+      <input type="hidden" value="true" name="createauction">
+      <table>
+          <tr th:each="articoloLibero : ${sellablearticles}">
+            <td th:text="${articoloLibero.name}"></td>
+            <td th:text="${articoloLibero.descrizione}"></td>
+            <td th:text="${articoloLibero.image}"></td>
+            <td>
+              <input type="checkbox" th:name="${articoloLibero.id}">
+            </td>
+          </tr>
+      </table>
+      <button type="submit"> Create Auction </button>
+    </form>
+  </div>
+</div>
+</body>
+</html>
