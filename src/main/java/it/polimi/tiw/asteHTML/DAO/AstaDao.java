@@ -125,4 +125,40 @@ public class AstaDao {
         connection.commit();
         connection.setAutoCommit(true);
     }
+    public List<AstaBean> getAsteAperteContententi(String query) throws SQLException {
+        String queryFind = "SELECT id FROM asteaperte WHERE id IN ( SELECT idAsta FROM articoli WHERE descrizione LIKE '%" + query + "%' OR nome LIKE '%" + query + "%')";
+        PreparedStatement pst = connection.prepareStatement(queryFind);
+
+        ResultSet resultSet = pst.executeQuery();
+        if(!resultSet.isBeforeFirst()){
+            return null;
+        }
+
+        List<AstaBean> toReturn = new ArrayList<>();
+
+        while (resultSet.next()){
+            toReturn.add(getAstaById(resultSet.getInt("id")));
+        }
+
+        return toReturn;
+    }
+
+    public List<AstaBean> getAsteVinteDa(int userId) throws SQLException {
+        String query = "SELECT * FROM astechiuse WHERE idVincitore = ?";
+        PreparedStatement pst = connection.prepareStatement(query);
+        pst.setInt(1, userId);
+
+        ResultSet resultSet = pst.executeQuery();
+
+        if(!resultSet.isBeforeFirst()){
+            return null;
+        }
+
+        List<AstaBean> toReturn = new ArrayList<>();
+
+        while(resultSet.next()){
+            toReturn.add(getAstaById(resultSet.getInt("id")));
+        }
+        return toReturn;
+    }
 }

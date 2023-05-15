@@ -64,7 +64,7 @@
   <p></p>
   <div>
     <h3>Add new Article</h3>
-    <form action="Vendo" method="post">
+    <form action="CreateArticle" method="post">
       <input type="text" name="nomearticolo" placeholder="Article Name">
       <input type="number" name="prezzo" placeholder="Price">
       <input type="text" name="descrizione" placeholder="Description">
@@ -75,10 +75,9 @@
 
   <div>
     <h3>Create Auction</h3>
-    <form action="Vendo" method="post">
+    <form action="CreateAuction" method="post">
       <input type="number" name="rialzominimo" placeholder="Minimum bid wedge">
-      <input type="date" name="datatermine" placeholder="Date Closure">
-      <input type="hidden" value="true" name="createauction">
+      <input type="datetime-local" name="datatermine" placeholder="Date Closure">
       <table>
           <tr th:each="articoloLibero : ${sellablearticles}">
             <td th:text="${articoloLibero.name}"></td>

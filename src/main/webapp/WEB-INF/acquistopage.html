@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="it_IT">
+<head>
+    <meta charset="UTF-8">
+    <title>Acquisti</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <form action="Acquisto" method="get">
+        <p th:text="${errorLoading}"></p>
+      <input type="text" name="query" th:value="${query}">
+      <button type="submit"> Search </button>
+    </form>
+
+    <table>
+        <tr>
+            <td>Auction ID</td>
+            <td>Time till closure</td>
+            <td>Ending Date</td>
+            <td>Last bid</td>
+            <td>Articles</td>
+        </tr>
+        <tr th:each="astaAperta : ${asteaperte}">
+            <td th:text="${astaAperta.id}"></td>
+            <td th:text="${astaAperta.getRemainingTime()}" ></td>
+            <td th:text="${astaAperta.dataScadenza}" ></td>
+            <td th:text="${astaAperta.prezzoRaggiunto == 0} ? 'no bids' : ${astaAperta.prezzoRaggiunto}"></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td>Auction ID</td>
+            <td>Winning Price</td>
+            <td>WinnerId</td>
+            <td>Shipping Address</td>
+        </tr>
+        <tr th:each="astaChiusa : ${astechiuse}">
+            <td th:text="${astaChiusa.id}"></td>
+            <td th:text="${astaChiusa.prezzoRaggiunto}"></td>
+            <td th:text="${astaChiusa.idVincitore}"></td>
+            <td th:text="${astaChiusa.indSped}"></td>
+        </tr>
+    </table>
+
+
+
+</body>
+</html>
