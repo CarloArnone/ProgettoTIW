@@ -37,6 +37,12 @@
         <td th:text="${astaAperta.getRemainingTime()}" ></td>
         <td th:text="${astaAperta.dataScadenza}" ></td>
         <td th:text="${astaAperta.prezzoRaggiunto == 0} ? 'no bids' : ${astaAperta.prezzoRaggiunto}"></td>
+        <td>
+          <form th:action="DettaglioAsta" method="get">
+            <input type="hidden" th:value="${astaAperta.id}" name="idAsta">
+            <button type="submit">open details</button>
+          </form>
+        </td>
       </tr>
     </table>
   </div>
@@ -56,6 +62,13 @@
         <td th:text="${astaChiusa.prezzoRaggiunto}"></td>
         <td th:text="${astaChiusa.idVincitore}"></td>
         <td th:text="${astaChiusa.indSped}"></td>
+        <td>
+          <form th:action="DettaglioAsta" method="get">
+            <input type="hidden" th:value="${astaChiusa.id}" name="idAsta">
+            <button type="submit">open details</button>
+          </form>
+        </td>
+
       </tr>
     </table>
   </div>

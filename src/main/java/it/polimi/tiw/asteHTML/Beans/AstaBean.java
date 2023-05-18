@@ -1,11 +1,16 @@
 package it.polimi.tiw.asteHTML.Beans;
 
+import it.polimi.tiw.asteHTML.DAO.UtenteDao;
+
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class AstaBean {
     private int id;
+    private int idCreatore;
+    private String userNameCreatore;
     private int idVincitore;
+    private String userNameVincitore;
     private int prezzoRaggiunto;
     private int rialzoMinimo;
     private Date dataScadenza;
@@ -13,8 +18,10 @@ public class AstaBean {
     private String indSped;
 
 
-    public AstaBean(int id, int prezzoRaggiunto, int rialzoMinimo, Date dataScadenza, int oreRimantenti) {
+    public AstaBean(int id, int idCreatore, String userNameCreatore, int prezzoRaggiunto, int rialzoMinimo, Date dataScadenza, int oreRimantenti) {
         this.id = id;
+        this.idCreatore = idCreatore;
+        this.userNameCreatore = userNameCreatore;
         this.prezzoRaggiunto = prezzoRaggiunto;
         this.rialzoMinimo = rialzoMinimo;
         this.dataScadenza = dataScadenza;
@@ -22,9 +29,12 @@ public class AstaBean {
         this.indSped = null;
     }
 
-    public AstaBean(int id, int idVincitore, int prezzoRaggiunto, Date dataScadenza, String indSped) {
+    public AstaBean(int id, int idCreatore, String userNameCreatore, String userNameVincitore, int idVincitore, int prezzoRaggiunto, Date dataScadenza, String indSped) {
         this.id = id;
+        this.idCreatore = idCreatore;
+        this.userNameCreatore = userNameCreatore;
         this.idVincitore = idVincitore;
+        this.userNameVincitore = userNameVincitore;
         this.prezzoRaggiunto = prezzoRaggiunto;
         this.dataScadenza = dataScadenza;
         this.indSped = indSped;
@@ -86,6 +96,30 @@ public class AstaBean {
         this.indSped = indSped;
     }
 
+    public int getIdCreatore() {
+        return idCreatore;
+    }
+
+    public void setIdCreatore(int idCreatore) {
+        this.idCreatore = idCreatore;
+    }
+
+    public String getUserNameCreatore() {
+        return userNameCreatore;
+    }
+
+    public void setUserNameCreatore(String userNameCreatore) {
+        this.userNameCreatore = userNameCreatore;
+    }
+
+    public String getUserNameVincitore() {
+        return userNameVincitore;
+    }
+
+    public void setUserNameVincitore(String userNameVincitore) {
+        this.userNameVincitore = userNameVincitore;
+    }
+
     public String getRemainingTime(){
         if(oreRimantenti > 0){ //Data login maggiore Data termine asta
             return "0d 0h";
@@ -94,5 +128,9 @@ public class AstaBean {
         int days = timeRemaining/24;
         int hours = timeRemaining - days*24;
         return days + "d " + hours + "h";
+    }
+
+    public String getPrezzoPerDettaglio(){
+        return prezzoRaggiunto == 0? "No Bids": String.valueOf(prezzoRaggiunto);
     }
 }

@@ -60,4 +60,17 @@ public class UtenteDao {
         return checkCredentials(username, password);
     }
 
+    public String getUserNameById(int id) throws SQLException {
+        String query = "SELECT userName FROM utenti WHERE id = ?";
+        PreparedStatement pst = connection.prepareStatement(query);
+        pst.setInt(1, id);
+        ResultSet res = pst.executeQuery();
+        if(!res.isBeforeFirst()){
+            return null;
+        }
+        res.next();
+
+        return res.getString("userName");
+    }
+
 }

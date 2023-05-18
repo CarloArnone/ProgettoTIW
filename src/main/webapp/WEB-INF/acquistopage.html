@@ -5,7 +5,14 @@
     <meta charset="UTF-8">
     <title>Acquisti</title>
     <style>
-
+        body{
+            background: #212121;
+            color: #e8e8e8;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
@@ -14,35 +21,57 @@
       <input type="text" name="query" th:value="${query}">
       <button type="submit"> Search </button>
     </form>
-
+    <h1>Open Auction</h1>
+    <p></p>
     <table>
         <tr>
             <td>Auction ID</td>
             <td>Time till closure</td>
             <td>Ending Date</td>
+            <td>Creator</td>
             <td>Last bid</td>
+            <td>Details</td>
             <td>Articles</td>
         </tr>
         <tr th:each="astaAperta : ${asteaperte}">
             <td th:text="${astaAperta.id}"></td>
             <td th:text="${astaAperta.getRemainingTime()}" ></td>
             <td th:text="${astaAperta.dataScadenza}" ></td>
+            <td th:text="${astaAperta.userNameCreatore}"></td>
             <td th:text="${astaAperta.prezzoRaggiunto == 0} ? 'no bids' : ${astaAperta.prezzoRaggiunto}"></td>
+            <td>
+                <form th:action="DettaglioAsta" method="get">
+                    <input type="hidden" th:value="${astaAperta.id}" name="idAsta">
+                    <button type="submit">open details</button>
+                </form>
+            </td>
         </tr>
     </table>
 
+    <h1>Won Auctions</h1>
+    <p></p>
     <table>
         <tr>
             <td>Auction ID</td>
+            <td>Creator</td>
             <td>Winning Price</td>
-            <td>WinnerId</td>
+            <td>Winner</td>
             <td>Shipping Address</td>
+            <td>Details</td>
         </tr>
         <tr th:each="astaChiusa : ${astechiuse}">
             <td th:text="${astaChiusa.id}"></td>
+            <td th:text="${astaChiusa.userNameCreatore}"></td>
             <td th:text="${astaChiusa.prezzoRaggiunto}"></td>
-            <td th:text="${astaChiusa.idVincitore}"></td>
+            <td th:text="${astaChiusa.userNameVincitore}"></td>
             <td th:text="${astaChiusa.indSped}"></td>
+            <td>
+            <form th:action="DettaglioAsta" method="get">
+                <input type="hidden" th:value="${astaChiusa.id}" name="idAsta">
+                <button type="submit">open details</button>
+            </form>
+            </td>
+
         </tr>
     </table>
 

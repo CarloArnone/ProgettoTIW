@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="it_IT">
+<head>
+    <meta charset="UTF-8">
+    <title>Auction Detail</title>
+    <style>
+        body{
+            background: #212121;
+            color: #e8e8e8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Auction Details</h1>
+    <span>Owner Name: <span th:text="${auction.userNameCreatore}"></span></span><br>
+    <span>Expiring Date: <span th:text="${auction.dataScadenza}"></span></span><br>
+    <span>Last Bid: <span th:text="${auction.getPrezzoPerDettaglio()}"></span></span><br>
+    <span th:if="${auction.idVincitore} == 0">Minimum Bid Wedge: <span th:text="${auction.rialzoMinimo}"></span></span><br>
+    <span th:if="${auction.idVincitore} != 0">Winner Name: <span th:text="${auction.userNameVincitore}"></span></span><br>
+    <span th:if="${auction.indSped} != null">Shipping Address: <span th:text="${auction.indSped}"></span></span><br>
+
+
+    <h2>Article List</h2>
+    <table>
+        <tr>
+            <td>Price</td>
+            <td>Name</td>
+            <td>Description</td>
+            <td>Image</td>
+        </tr>
+        <tr th:each="article : ${articles}">
+            <td th:text="${article.prezzo}"></td>
+            <td th:text="${article.name}"></td>
+            <td th:text="${article.descrizione}"></td>
+            <td th:text=" ${article.image}"></td>
+        </tr>
+    </table>
+
+    <--! ADD CLOSE BUTTON>
+
+    <form th:if="${session.user.id != auction.idCreatore}" action="DettaglioAsta" method="post">
+        <input type="number" name="bid">
+        <input type="hidden" name="auctionId" th:value="${auction.id}">
+        <button type="submit">Place Bid</button>
+    </form>
+
+
+    <table th:if="${offers.size()} != 0">
+        <tr>
+            <td>Placer</td>
+            <td>Bid</td>
+            <td>Date</td>
+        </tr>
+        <tr th:each="offer : ${offers}">
+            <td th:text="${offer.idCreatore}"></td>
+            <td th:text="${offer.prezzoOfferto}"></td>
+            <td th:text="${offer.dataOfferta}"></td>
+        </tr>
+    </table>
+</body>
+</html>

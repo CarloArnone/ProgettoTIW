@@ -37,11 +37,8 @@ public class AstaDao {
     }
     public AstaBean getAstaById(int auctionId) throws SQLException {
         String query = "SELECT closed FROM aste WHERE id = ?";
-        String queryFinale = "SELECT * FROM ? WHERE id = ?";
         PreparedStatement pst = connection.prepareStatement(query);
-        PreparedStatement pst1 = connection.prepareStatement(queryFinale);
         pst.setInt(1, auctionId);
-        pst1.setInt(2, auctionId);
 
         ResultSet r1 = pst.executeQuery();
         if(!r1.isBeforeFirst()){
@@ -50,17 +47,39 @@ public class AstaDao {
 
         r1.next();
         if (r1.getBoolean("closed")) {
-            pst1.setString(1, "astechiuse");
+            String queryFinale = "SELECT * FROM astechiuse WHERE id = ?";
+            PreparedStatement pst1 = connection.prepareStatement(queryFinale);
+            pst1.setInt(1, auctionId);
             ResultSet res = pst1.executeQuery();
+            if(!res.isBeforeFirst()){
+                return null;
+            }
+
+            res.next();
+            UtenteDao utenteDao = new UtenteDao(connection);
             return new AstaBean( res.getInt("id"),
+                    res.getInt("idCreatore"),
+                    utenteDao.getUserNameById(res.getInt("idCreatore")),
+                    utenteDao.getUserNameById(res.getInt("idVincitore")),
                     res.getInt("idVincitore"),
                     res.getInt("prezzoFinale"),
                     res.getDate("dataTermine"),
                     res.getString("indirizzoSpedizione"));
         } else {
-            pst1.setString(1, "asteaperte");
+            String queryFinale = "SELECT * FROM asteaperte WHERE id = ?";
+            PreparedStatement pst1 = connection.prepareStatement(queryFinale);
+            pst1.setInt(1, auctionId);
+
             ResultSet res = pst1.executeQuery();
+            if(!res.isBeforeFirst()){
+                return null;
+            }
+
+            res.next();
+            UtenteDao utenteDao = new UtenteDao(connection);
             return new AstaBean( res.getInt("id"),
+                    res.getInt("idCreatore"),
+                    utenteDao.getUserNameById(res.getInt("idCreatore")),
                     res.getInt("prezzoMassimoRaggiunto"),
                     res.getInt("rialzoMinimo"),
                     res.getDate("dataTermine"),
@@ -73,9 +92,11 @@ public class AstaDao {
         ResultSet res = pst.executeQuery();
 
         List<AstaBean> toReturn = new ArrayList<>();
-
+        UtenteDao utenteDao = new UtenteDao(connection);
         while(res.next()){
             toReturn.add(new AstaBean( res.getInt("id"),
+                    res.getInt("idCreatore"),
+                    utenteDao.getUserNameById(res.getInt("idCreatore")),
                     res.getInt("prezzoMassimoRaggiunto"),
                     res.getInt("rialzoMinimo"),
                     res.getDate("dataTermine"),
@@ -88,9 +109,12 @@ public class AstaDao {
         ResultSet res = pst.executeQuery();
 
         List<AstaBean> toReturn = new ArrayList<>();
-
+        UtenteDao utenteDao = new UtenteDao(connection);
         while(res.next()){
             toReturn.add(new AstaBean( res.getInt("id"),
+                                        res.getInt("idCreatore"),
+                                        utenteDao.getUserNameById(res.getInt("idCreatore")),
+                                        utenteDao.getUserNameById(res.getInt("idCreatore")),
                                         res.getInt("idVincitore"),
                                         res.getInt("prezzoFinale"),
                                         res.getDate("dataTermine"),
@@ -161,4 +185,6 @@ public class AstaDao {
         }
         return toReturn;
     }
+
+
 }
