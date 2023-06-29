@@ -81,31 +81,23 @@ public class DettaglioAsta extends HttpServlet {
         } catch (SQLException e) {
             path = "/home.html";
         }
+        try{
+            String error = req.getParameter("error");
+            ctx.setVariable("error", error);
+        }
+        catch (Exception e){
 
+        }
         templateEngine.process(path, ctx, resp.getWriter());
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try{
-            int bid = Integer.parseInt(req.getParameter("bid"));
-            int userId = ((UserBean)req.getSession().getAttribute("user")).getId();
-            AstaBean asta = new AstaDao(connection).getAstaById(Integer.parseInt(req.getParameter("auctionId")));
-            req.setAttribute("idAsta", asta.getId());
-            if(        bid < asta.getPrezzoRaggiunto() + asta.getRialzoMinimo()
-                    || asta.getIdCreatore() == userId){
-                req.setAttribute("idAsta", asta.getId());
-                throw new Exception();
-            }
-            new OfferteDao(connection).insertOffer(userId, asta.getId(), bid);
-            doGet(req, resp);
-        } catch (Exception e) {
-            doGet(req, resp);
-        }
-    }
 
-    @Override
+        @Override
     public void destroy() {
-
-    }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
 }

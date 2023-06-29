@@ -2,6 +2,15 @@ package it.polimi.tiw.asteHTML.DAO;
 
 import it.polimi.tiw.asteHTML.Beans.ArticoloBean;
 
+import javax.servlet.http.Part;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,16 +97,23 @@ public class ArticoloDao {
         return toReturn;
     }
 
-    public void aggiungiArticolo(int idCreatore, String articleName, int price, String description, String image) throws SQLException {
+    public void aggiungiArticolo(int idCreatore, String articleName, int price, String description, Part image) throws SQLException, IOException {
         String query = "INSERT INTO articoli (idCreatore, nome, prezzo, descrizione, immagine) VALUES (?, ?, ?, ?, ?) ";
+        Path imagePath = Paths.get(findCorrectPathFromResources("")).resolve(image.getSubmittedFileName());
+        Files.copy(image.getInputStream(), imagePath,  StandardCopyOption.REPLACE_EXISTING);
         PreparedStatement pst = connection.prepareStatement(query);
         pst.setInt(1, idCreatore);
         pst.setString(2, articleName);
         pst.setInt(3, price);
         pst.setString(4, description);
-        pst.setString(5, image);
+        pst.setString(5, imagePath.toString());
 
         pst.executeUpdate();
+    }
+
+
+    public static String findCorrectPathFromResources(String pathFromRes){
+        return "C:\\Users\\carlo\\Desktop\\immagini\\";
     }
 
 }

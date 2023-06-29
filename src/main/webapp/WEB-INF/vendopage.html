@@ -22,7 +22,22 @@
   </style>
 </head>
 <body>
+
+<br>
 <div>
+  <table>
+    <tr>
+      <td>
+        <a href="LoginPage" class="input">Home</a>
+        <a href="Acquisto" class="input">Acquisto Page</a>
+        <a href="Vendo" class="input"> Vendo Page</a>
+        <a href="LogOut" class="input"> LogOut</a>
+      </td>
+    </tr>
+  </table>
+
+
+  <h1>Open auctions</h1>
   <div>
     <table>
       <tr>
@@ -30,7 +45,6 @@
         <td>Time till closure</td>
         <td>Ending Date</td>
         <td>Last bid</td>
-        <td>Articles</td>
       </tr>
       <tr th:each="astaAperta : ${asteaperte}">
         <td th:text="${astaAperta.id}"></td>
@@ -49,6 +63,7 @@
   <p></p>
   <p></p>
   <p></p>
+  <h1>Closed auctions</h1>
   <div>
     <table>
       <tr>
@@ -59,8 +74,8 @@
       </tr>
       <tr th:each="astaChiusa : ${astechiuse}">
         <td th:text="${astaChiusa.id}"></td>
-        <td th:text="${astaChiusa.prezzoRaggiunto}"></td>
-        <td th:text="${astaChiusa.idVincitore}"></td>
+        <td th:text="${astaChiusa.prezzoRaggiunto == 0} ? 'no bids' : ${astaChiusa.prezzoRaggiunto}"></td>
+        <td th:text="${astaChiusa.userNameVincitore}"></td>
         <td th:text="${astaChiusa.indSped}"></td>
         <td>
           <form th:action="DettaglioAsta" method="get">
@@ -77,11 +92,11 @@
   <p></p>
   <div>
     <h3>Add new Article</h3>
-    <form action="CreateArticle" method="post">
+    <form action="CreateArticle" method="post" enctype="multipart/form-data">
       <input type="text" name="nomearticolo" placeholder="Article Name">
       <input type="number" name="prezzo" placeholder="Price">
       <input type="text" name="descrizione" placeholder="Description">
-      <input type="text" name="immagine" placeholder="Article image">
+      <input type="file" name="immagine">
       <button type="submit"> Add </button>
     </form>
   </div>
@@ -95,7 +110,9 @@
           <tr th:each="articoloLibero : ${sellablearticles}">
             <td th:text="${articoloLibero.name}"></td>
             <td th:text="${articoloLibero.descrizione}"></td>
-            <td th:text="${articoloLibero.image}"></td>
+            <td>
+              <img th:src="${articoloLibero.image}" alt="No Image">
+            </td>
             <td>
               <input type="checkbox" th:name="${articoloLibero.id}">
             </td>

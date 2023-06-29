@@ -77,13 +77,18 @@ public class AstaDao {
 
             res.next();
             UtenteDao utenteDao = new UtenteDao(connection);
-            return new AstaBean( res.getInt("id"),
+            AstaBean asta =  new AstaBean( res.getInt("id"),
                     res.getInt("idCreatore"),
                     utenteDao.getUserNameById(res.getInt("idCreatore")),
                     res.getInt("prezzoMassimoRaggiunto"),
                     res.getInt("rialzoMinimo"),
                     res.getDate("dataTermine"),
                     res.getInt("oreRimanenti"));
+
+            pst.close();
+            pst1.close();
+
+            return asta;
 
         }
 
@@ -187,4 +192,13 @@ public class AstaDao {
     }
 
 
+    public void closeAuction(int id) {
+        String query = "UPDATE aste SET closed = true WHERE id = ?";
+        try(PreparedStatement pst = connection.prepareStatement(query)){
+            pst.setInt(1, id);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

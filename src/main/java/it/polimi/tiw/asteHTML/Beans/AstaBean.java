@@ -22,6 +22,7 @@ public class AstaBean {
         this.id = id;
         this.idCreatore = idCreatore;
         this.userNameCreatore = userNameCreatore;
+        this.idVincitore = -1;
         this.prezzoRaggiunto = prezzoRaggiunto;
         this.rialzoMinimo = rialzoMinimo;
         this.dataScadenza = dataScadenza;
@@ -33,8 +34,14 @@ public class AstaBean {
         this.id = id;
         this.idCreatore = idCreatore;
         this.userNameCreatore = userNameCreatore;
-        this.idVincitore = idVincitore;
-        this.userNameVincitore = userNameVincitore;
+        if(idVincitore == 0){
+            this.idVincitore = 0;
+            this.userNameVincitore = "No Winner";
+        }
+        else{
+            this.idVincitore = idVincitore;
+            this.userNameVincitore = userNameVincitore;
+        }
         this.prezzoRaggiunto = prezzoRaggiunto;
         this.dataScadenza = dataScadenza;
         this.indSped = indSped;

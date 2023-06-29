@@ -4,6 +4,8 @@ import it.polimi.tiw.asteHTML.Beans.ArticoloBean;
 import it.polimi.tiw.asteHTML.Beans.UserBean;
 import it.polimi.tiw.asteHTML.DAO.ArticoloDao;
 import it.polimi.tiw.asteHTML.DAO.AstaDao;
+import it.polimi.tiw.asteHTML.Exception.WrongDateExeption;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
@@ -51,9 +53,8 @@ public class CreateAuction extends HttpServlet {
             int rialzoMin = Integer.parseInt(req.getParameter("rialzominimo"));
             java.util.Date dataTermine = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm").parse(req.getParameter("datatermine"));
 
-            if(dataTermine.before(Calendar.getInstance().getTime())){
-                String context = getServletContext().getContextPath();
-                resp.sendRedirect(context + "/Vendo");
+            if(dataTermine.before(Calendar.getInstance().getTime())){ //TODO DEBUG
+                throw new WrongDateExeption();
             }
 
 
@@ -88,9 +89,8 @@ public class CreateAuction extends HttpServlet {
                     throw new RuntimeException(e);
                 }
             }
-        } catch (ParseException e) {
-            String context = getServletContext().getContextPath();
-            resp.sendRedirect(context + "/Vendo");
+        } catch (ParseException | WrongDateExeption ignored) {
+
         } finally {
             String context = getServletContext().getContextPath();
             resp.sendRedirect(context + "/Vendo");

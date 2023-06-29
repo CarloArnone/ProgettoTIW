@@ -20,4 +20,25 @@
         <param-name>dbDriver</param-name>
         <param-value>com.mysql.cj.jdbc.Driver</param-value>
     </context-param>
+
+    <filter>
+        <filter-name>LoginCheck</filter-name>
+        <filter-class>it.polimi.tiw.asteHTML.Filters.LoginCheck</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginCheck</filter-name>
+        <url-pattern>/auctiondetail.html</url-pattern>
+        <url-pattern>/acquistopage.html</url-pattern>
+        <url-pattern>/home.html</url-pattern>
+        <url-pattern>/vendopage.html</url-pattern>
+        <url-pattern>/Vendo</url-pattern>
+        <url-pattern>/Acquisto</url-pattern>
+        <url-pattern>/AddOffer</url-pattern>
+        <url-pattern>/CloseAuction</url-pattern>
+        <url-pattern>/CreateArticle</url-pattern>
+        <url-pattern>/CreateAuction</url-pattern>
+        <url-pattern>/DettaglioAsta</url-pattern>
+        <url-pattern>/Home</url-pattern>
+        <url-pattern>/Offerte</url-pattern>
+    </filter-mapping>
 </web-app>

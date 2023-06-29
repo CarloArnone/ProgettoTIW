@@ -12,12 +12,26 @@
     </style>
 </head>
 <body>
+
+<table>
+    <tr>
+        <td>
+            <a href="LoginPage" class="input">Home</a>
+            <a href="Acquisto" class="input">Acquisto Page</a>
+            <a href="Vendo" class="input"> Vendo Page</a>
+            <a href="LogOut" class="input"> LogOut</a>
+        </td>
+    </tr>
+</table>
+
+    <p th:text="${error}"></p>
+
     <h1>Auction Details</h1>
     <span>Owner Name: <span th:text="${auction.userNameCreatore}"></span></span><br>
     <span>Expiring Date: <span th:text="${auction.dataScadenza}"></span></span><br>
     <span>Last Bid: <span th:text="${auction.getPrezzoPerDettaglio()}"></span></span><br>
     <span th:if="${auction.idVincitore} == 0">Minimum Bid Wedge: <span th:text="${auction.rialzoMinimo}"></span></span><br>
-    <span th:if="${auction.idVincitore} != 0">Winner Name: <span th:text="${auction.userNameVincitore}"></span></span><br>
+    <span th:if="${auction.idVincitore} != -1">Winner Name: <span th:text="${auction.userNameVincitore}"></span></span><br>
     <span th:if="${auction.indSped} != null">Shipping Address: <span th:text="${auction.indSped}"></span></span><br>
 
 
@@ -33,15 +47,22 @@
             <td th:text="${article.prezzo}"></td>
             <td th:text="${article.name}"></td>
             <td th:text="${article.descrizione}"></td>
-            <td th:text=" ${article.image}"></td>
+            <td>
+                <span>
+                    <img th:src="${article.image}" alt="No Image Found">
+                </span>
+            </td>
         </tr>
     </table>
 
-    <--! ADD CLOSE BUTTON>
+    <form action="CloseAuction" method="post" th:if="${auction.idVincitore < 0 && auction.idCreatore == session.user.id} ">
+        <input type="hidden" name="idAsta" th:value="${auction.id}">
+        <button type="submit">close</button>
+    </form>
 
-    <form th:if="${session.user.id != auction.idCreatore}" action="DettaglioAsta" method="post">
+    <form th:if="${session.user.id != auction.idCreatore}" action="AddOffer" method="post">
         <input type="number" name="bid">
-        <input type="hidden" name="auctionId" th:value="${auction.id}">
+        <input type="hidden" name="idAsta" th:value="${auction.id}">
         <button type="submit">Place Bid</button>
     </form>
 

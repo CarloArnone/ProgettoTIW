@@ -51,6 +51,15 @@ public class Home extends HttpServlet {
 
     }
 
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ServletContext servletContext = getServletContext();
+        final WebContext ctx = new WebContext(req, resp, servletContext, req.getLocale());
+        String path = "/home.html";
+        templateEngine.process(path, ctx, resp.getWriter());
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -139,6 +148,9 @@ public class Home extends HttpServlet {
                 pwd = req.getParameter("pwd");
 
                 ctx.setVariable("oldUserName", username);
+                if(req.getAttribute("errorNotLoggedIn") != null){
+                    ctx.setVariable("errorLogin", req.getAttribute("errorNotLoggedIn"));
+                }
             }
             catch (Exception ex){
                 path += "/login.html";

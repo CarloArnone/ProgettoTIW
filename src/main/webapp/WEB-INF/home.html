@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
 </head>
 <body>
+<table>
+    <tr>
+        <td>
+            <a href="LoginPage" class="input">Home</a>
+            <a href="Acquisto" class="input">Acquisto Page</a>
+            <a href="Vendo" class="input"> Vendo Page</a>
+            <a href="LogOut" class="input"> LogOut</a>
+        </td>
+    </tr>
+</table>
 <p th:text="${session.user.getId()} ?: 'Nessuno'"></p>
 <a th:href="@{Vendo}">Vendo Page</a>
 <a th:href="@{Acquisto}">Acquisto Page</a>
