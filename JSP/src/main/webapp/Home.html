@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <script src="home.js" defer></script>
+  <script src="utils.js" defer></script>
+  <link rel="stylesheet" type="text/css" media="all" href="CSS/stylesheet1.css">
+</head>
+<body>
+<span>
+            <button class="menu_button" name="homePage">Home</button>
+            <button class="menu_button" name="acquistoPage">AcquistoPage</button>
+            <button class="menu_button" name="vendoPage">VendoPage</button>
+            <button class="menu_button" name="LogOut">LogOut</button>
+        </span>
+<br>
+<br>
+<div id="homePage" class="shown_content">
+  <button class="home_button" name="vendoPage">Vendo Page</button>
+  <button class="home_button" name="acquistoPage">Acquisto Page</button>
+</div>
+<div id="vendoPage" class="hidden_content">
+    <h1>Open auctions</h1>
+    <table id="asteAperteVendo">
+        <tr name="firstRow">
+            <td>Auction ID</td>
+            <td>Time till closure</td>
+            <td>Ending Date</td>
+            <td>Last bid</td>
+        </tr>
+    </table>
+
+    <p></p>
+    <p></p>
+    <p></p>
+    <h1>Closed auctions</h1>
+    <table id="asteChiuseVendo">
+        <tr name="firstRow">
+            <td>Auction ID</td>
+            <td>Winning Price</td>
+            <td>WinnerId</td>
+            <td>Shipping Address</td>
+        </tr>
+    </table>
+
+    <p></p>
+    <p></p>
+    <p></p>
+    <div>
+        <h3>Add new Article</h3>
+        <p id="errorInCreateArticle" class="error"></p>
+        <form action="#" enctype="multipart/form-data">
+            <input type="text" name="nomearticolo" placeholder="Article Name">
+            <input type="number" name="prezzo" placeholder="Price">
+            <input type="text" name="descrizione" placeholder="Description">
+            <input type="file" name="immagine">
+            <button type="submit" id="createArticleButton"> Add </button>
+        </form>
+    </div>
+
+    <div>
+        <h3>Create Auction</h3>
+        <p id="errorInCreateAuction" class="error"></p>
+        <form action="#">
+            <input type="number" id="rialzominimo" name="rialzominimo" placeholder="Minimum bid wedge">
+            <input type="datetime-local" id="datatermine"  name="datatermine" placeholder="Date Closure">
+            <table id="sellableArticlesList">
+            </table>
+            <button id="createAuctionButton"> Create Auction </button>
+        </form>
+    </div>
+
+</div>
+<div id="acquistoPage" class="hidden_content">
+    <form action="#">
+        <p id="errorLoading"></p>
+        <input type="text" id="query">
+        <button type="submit" id="submitQuery"> Search </button>
+    </form>
+    <h1>Open Auction</h1>
+    <p></p>
+    <table id="asteAperteAcquisto">
+        <tr name="firstRow">
+            <td>Auction ID</td>
+            <td>Time till closure</td>
+            <td>Ending Date</td>
+            <td>Creator</td>
+            <td>Last bid</td>
+            <td>Details</td>
+        </tr>
+    </table>
+
+    <h1>Won Auctions</h1>
+    <p></p>
+    <table id="asteChiuseAcquisto">
+        <tr name="firstRow">
+            <td>Auction ID</td>
+            <td>Creator</td>
+            <td>Winning Price</td>
+            <td>Winner</td>
+            <td>Shipping Address</td>
+            <td>Details</td>
+        </tr>
+    </table>
+</div>
+<div id="auctionDetails" class="hidden_content">
+
+    <h2>Info</h2>
+    <div id="infoDiv">
+
+    </div>
+
+    <h2>Article List</h2>
+    <table id="articleList">
+        <tr name="firstRow">
+            <td>Price</td>
+            <td>Name</td>
+            <td>Description</td>
+            <td>Image</td>
+        </tr>
+    </table>
+    <p id="errorClose" class="error"></p>
+    <button id="closeButton" class="hidden_content">Close</button>
+    <!-- dynamically add close button and add offer field-->
+    <p id="errorBid" class="error"></p>
+    <form action="#" class="hidden_content" id="placeABidForm">
+        <input type="number" name="bid" id="bid">
+        <input type="hidden" name="idAsta" id="idAstaPlaceBid">
+        <button id="placeBidButton">Place bid</button>
+    </form>
+
+    <table id="offersList">
+        <tr name="firstRow">
+            <td>Placer</td>
+            <td>Bid</td>
+            <td>Date</td>
+        </tr>
+
+    </table>
+</div>
+
+</body>
+</html>

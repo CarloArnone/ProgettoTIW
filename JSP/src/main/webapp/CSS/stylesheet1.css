@@ -1,0 +1,50 @@
+.hidden_content{
+    display: none;
+}
+
+.shown_content{
+    display: block;
+}
+
+.home_button{
+
+}
+
+.menu_button {
+    padding: 10px 20px;
+    height: 7%;
+    width: 15%;
+    justify-self: right;
+    border: none;
+    font-size: 13px;
+    color: #fff;
+    border-radius: 7px;
+    letter-spacing: 4px;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: 0.5s;
+    transition-property: box-shadow;
+}
+
+.menu_button {
+    background: rgb(0,140,255);
+    box-shadow: 0 0 25px rgb(0,140,255);
+}
+
+.menu_button:hover {
+    box-shadow: 0 0 5px rgb(0,140,255),
+    0 0 25px rgb(0,140,255),
+    0 0 50px rgb(0,140,255),
+    0 0 100px rgb(0,140,255);
+}
+
+.image_preview{
+    width: 100px;
+    height: 100px;
+}
+
+.error{
+    color: #ff2a00;
+    font-weight: bold;
+    font-size: 10px;
+}
